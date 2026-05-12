@@ -11,10 +11,18 @@ app.use(express.static(path.join(__dirname, "public")))
 app.set("view engine", "ejs")
 
 
-app.get("/", (req,res) => {
-    res.send("hey")
-})
+const connectDB = require("./config/mongooseConnection")
+connectDB()
 
+
+const ownersRouter = require("./routers/ownersRouter")
+const usersRouter = require("./routers/usersRouter")
+const productsRouter = require("./routers/productsRouter")
+
+
+app.use("/owners", ownersRouter)
+app.use("/users", usersRouter)
+app.use("/products", productsRouter)
 
 
 app.listen(3000)
